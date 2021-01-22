@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Feed } from 'feed';
-import { launch } from 'puppeteer';
+import { chromium } from 'playwright';
 
 interface Episode {
   image_urls: { type: string; url: string }[];
@@ -19,12 +19,13 @@ export default async (req: NowRequest, res: NowResponse) => {
     favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
   });
 
-  const browser = await launch({ headless: true });
-  const page = await browser.newPage();
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
   page.on('requestfinished', async (request) => {
     if (request.method() === 'GET' && request.url().includes('/episodes/epis_')) {
-      const episode: Episode = (await request.response().json()) as Episode;
+      const episode: Episode = (await (await request.response()).json()) as Episode;
       console.log('episode', episode);
 
       feed.addItem({
@@ -37,7 +38,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     }
   });
 
-  await page.goto('https://f1tv.formula1.com/en/home', { waitUntil: 'networkidle2' });
+  await page.goto('https://f1tv.formula1.com/en/home', { waitUntil: 'networkidle' });
 
   await browser.close();
 
