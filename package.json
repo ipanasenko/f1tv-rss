@@ -7,11 +7,11 @@
   "author": "Ilya Panasenko <hottdogg2008@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^5.5.0",
-    "rss": "^1.2.2"
+    "feed": "^4.2.2",
+    "puppeteer": "^5.5.0"
   },
   "devDependencies": {
-    "@types/rss": "^0.0.28",
+    "@types/puppeteer": "^5.4.2",
     "@vercel/node": "^1.9.0",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
