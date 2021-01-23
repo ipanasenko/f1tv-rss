@@ -7,8 +7,10 @@
   "author": "Ilya Panasenko <hottdogg2008@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/ramda": "^0.27.35",
+    "axios": "^0.21.1",
     "feed": "^4.2.2",
-    "playwright": "^1.8.0"
+    "ramda": "^0.27.1"
   },
   "devDependencies": {
     "@vercel/node": "^1.9.0",

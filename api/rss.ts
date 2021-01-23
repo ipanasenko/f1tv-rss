@@ -1,6 +1,7 @@
 import { NowRequest, NowResponse } from '@vercel/node';
+import axios from 'axios';
 import { Feed } from 'feed';
-import { chromium } from 'playwright';
+import { descend, match, pipe, prop, sort, uniq } from 'ramda';
 
 interface Episode {
   image_urls: { type: string; url: string }[];
@@ -11,6 +12,11 @@ interface Episode {
   synopsis: string;
 }
 
+const getCreatedTS = pipe<Episode, Episode['created'], number>(prop('created'), (created) =>
+  new Date(created).valueOf(),
+);
+const byCreatedDate = descend(getCreatedTS);
+
 export default async (req: NowRequest, res: NowResponse) => {
   const feed = new Feed({
     title: 'F1 TV RSS Feed',
@@ -19,28 +25,27 @@ export default async (req: NowRequest, res: NowResponse) => {
     favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
   });
 
-  const browser = await chromium.launch();
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  const { data: home } = await axios.get('https://f1tv-api.formula1.com/agl/1.0/ukr/en/all_devices/global/home');
+  const episodeIds = pipe(JSON.stringify, match(/epis_\w+/g), uniq)(home);
 
-  page.on('requestfinished', async (request) => {
-    if (request.method() === 'GET' && request.url().includes('/episodes/epis_')) {
-      const episode: Episode = (await (await request.response()).json()) as Episode;
-      console.log('episode', episode);
+  const episodeRequests = await Promise.all(
+    episodeIds.map((episodeId) =>
+      axios.get(`https://f1tv-api.formula1.com/agl/1.0/unk/en/all_devices/global/episodes/${episodeId}/`),
+    ),
+  );
+  const episodesData: Episode[] = episodeRequests.map(({ data }) => data);
 
-      feed.addItem({
-        title: episode.title,
-        description: episode.synopsis,
-        link: `https://f1tv.formula1.com/en/episode/${episode.slug}`,
-        date: new Date(episode.created),
-        image: episode.image_urls[0].url,
-      });
-    }
+  const sortedEpisodes = sort(byCreatedDate, episodesData);
+
+  sortedEpisodes.forEach((episode) => {
+    feed.addItem({
+      title: episode.title,
+      description: episode.synopsis,
+      link: `https://f1tv.formula1.com/en/episode/${episode.slug}`,
+      date: new Date(episode.created),
+      image: episode.image_urls[0].url,
+    });
   });
-
-  await page.goto('https://f1tv.formula1.com/en/home', { waitUntil: 'networkidle' });
-
-  await browser.close();
 
   res.status(200).send(feed.atom1());
 };
