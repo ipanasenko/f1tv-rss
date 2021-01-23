@@ -9,7 +9,6 @@ interface Episode {
   created: string;
   title: string;
   slug: string;
-  synopsis: string;
 }
 
 const getCreatedTS = pipe<Episode, Episode['created'], number>(prop('created'), (created) =>
@@ -40,7 +39,7 @@ export default async (req: NowRequest, res: NowResponse) => {
   sortedEpisodes.forEach((episode) => {
     feed.addItem({
       title: episode.title,
-      description: episode.synopsis,
+      description: `<img src="${episode.image_urls[0].url}" alt="${episode.title}">`,
       link: `https://f1tv.formula1.com/en/episode/${episode.slug}`,
       date: new Date(episode.created),
       image: episode.image_urls[0].url,
