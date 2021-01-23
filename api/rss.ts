@@ -19,7 +19,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
   });
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
 
