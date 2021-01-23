@@ -19,7 +19,7 @@ const byCreatedDate = descend(getCreatedTS);
 
 export default async (req: NowRequest, res: NowResponse) => {
   const feed = new Feed({
-    title: 'F1 TV RSS Feed',
+    title: 'F1 TV',
     id: 'https://f1tv.formula1.com/en/home',
     copyright: '',
     favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
