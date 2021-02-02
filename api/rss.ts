@@ -23,7 +23,11 @@ export default async (req: NowRequest, res: NowResponse) => {
     id: 'https://f1tv.formula1.com/en/home',
     copyright: '',
     favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
+    feed: 'https://f1tv-rss.vercel.app/api/rss',
   });
+  feed.addCategory('sports');
+  feed.addCategory('motorsport');
+  feed.addCategory('formula1');
 
   const { data: home } = await axios.get('https://f1tv-api.formula1.com/agl/1.0/ukr/en/all_devices/global/home');
   const episodeIds = pipe(JSON.stringify, match(/epis_\w+/g), uniq)(home);
@@ -46,8 +50,10 @@ export default async (req: NowRequest, res: NowResponse) => {
       link: `https://f1tv.formula1.com/en/episode/${episode.slug}`,
       date: new Date(episode.created),
       image: episode.image_urls[0].url,
+      author: [{ name: 'F1 TV' }],
     });
   });
 
+  res.setHeader('content-type', 'application/xml; charset=UTF-8');
   res.status(200).send(feed.atom1());
 };
