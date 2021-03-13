@@ -1,23 +1,59 @@
-import { NowRequest, NowResponse } from '@vercel/node';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import axios from 'axios';
 import { Feed } from 'feed';
-import { descend, match, pipe, prop, sort, uniq } from 'ramda';
+import { contains, descend, find, map, pipe, prop, propSatisfies, sort } from 'ramda';
 
 interface Episode {
-  image_urls: { type: string; url: string }[];
+  imageURL: string;
   uid: string;
-  created: string;
+  created: number;
   title: string;
-  slug: string;
+  link: string;
   synopsis: string;
 }
 
-const getCreatedTS = pipe<Episode, Episode['created'], number>(prop('created'), (created) =>
-  new Date(created).valueOf(),
-);
+interface DetailAction {
+  href: string;
+}
+
+const getCreatedTS = prop('created');
 const byCreatedDate = descend(getCreatedTS);
 
-export default async (req: NowRequest, res: NowResponse) => {
+const findDetailAction = find<DetailAction>(propSatisfies(contains('/detail/'), 'href'));
+
+const findAllEpisodes = (obj, currentItems = []) => {
+  const containerItems = obj.resultObj.containers || [];
+  return containerItems.reduce((acc, containerItem) => {
+    if (containerItem.retrieveItems) {
+      // going deeper into recursion
+      return findAllEpisodes(containerItem.retrieveItems, acc);
+    }
+
+    const detailAction = findDetailAction(containerItem.actions || []);
+    if (detailAction) {
+      // found an item!
+      return [...acc, containerItem];
+    }
+
+    return acc;
+  }, currentItems);
+};
+
+const transformEpisode = (containerItem): Episode => {
+  const { externalId, pictureUrl, longDescription, contractStartDate, title } = containerItem.metadata;
+  const detailAction = findDetailAction(containerItem.actions);
+
+  return {
+    imageURL: `https://ott.formula1.com/image-resizer/image/${pictureUrl}?w=576&h=324&o=L`,
+    uid: externalId,
+    created: contractStartDate,
+    title,
+    link: `https://f1tv.formula1.com${detailAction.href}`,
+    synopsis: longDescription,
+  };
+};
+
+export default async (req: VercelRequest, res: VercelResponse) => {
   const feed = new Feed({
     title: 'F1 TV',
     id: 'https://f1tv.formula1.com/en/home',
@@ -29,15 +65,8 @@ export default async (req: NowRequest, res: NowResponse) => {
   feed.addCategory('motorsport');
   feed.addCategory('formula1');
 
-  const { data: home } = await axios.get('https://f1tv-api.formula1.com/agl/1.0/ukr/en/all_devices/global/home');
-  const episodeIds = pipe(JSON.stringify, match(/epis_\w+/g), uniq)(home);
-
-  const episodeRequests = await Promise.all(
-    episodeIds.map((episodeId) =>
-      axios.get(`https://f1tv-api.formula1.com/agl/1.0/unk/en/all_devices/global/episodes/${episodeId}/`),
-    ),
-  );
-  const episodesData: Episode[] = episodeRequests.map(({ data }) => data);
+  const { data } = await axios.get('https://f1tv.formula1.com/2.0/A/ENG/WEB_DASH/ALL/PAGE/395/F1_TV_Pro_Annual/2');
+  const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
 
@@ -46,10 +75,10 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     feed.addItem({
       title: episode.title,
-      description: `<div>${synopsis}<p><img src="${episode.image_urls[0].url}" alt="${episode.title}"></p></div>`,
-      link: `https://f1tv.formula1.com/en/episode/${episode.slug}`,
+      description: `<div>${synopsis}<p><img src="${episode.imageURL}" alt="${episode.title}"></p></div>`,
+      link: episode.link,
       date: new Date(episode.created),
-      image: episode.image_urls[0].url,
+      image: episode.imageURL,
       author: [{ name: 'F1 TV' }],
     });
   });
