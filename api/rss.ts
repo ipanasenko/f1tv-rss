@@ -48,7 +48,7 @@ const transformEpisode = (containerItem): Episode => {
     uid: externalId,
     created: contractStartDate,
     title,
-    link: `https://f1tv.formula1.com${detailAction.href}`,
+    link: `https://f1tv.formula1.com${detailAction.href.replace('?action=play', '')}`,
     synopsis: longDescription,
   };
 };
