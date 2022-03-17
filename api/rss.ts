@@ -44,7 +44,7 @@ const transformEpisode = (containerItem): Episode => {
   const detailAction = findDetailAction(containerItem.actions);
 
   return {
-    imageURL: `https://ott.formula1.com/image-resizer/image/${pictureUrl}?w=576&h=324&o=L`,
+    imageURL: `https://f1tv.formula1.com/image-resizer/image/${pictureUrl}?w=708&h=398&q=HI&o=L`,
     uid: externalId,
     created: contractStartDate,
     title,
