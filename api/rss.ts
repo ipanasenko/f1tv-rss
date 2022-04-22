@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import axios from 'axios';
 import { Feed } from 'feed';
-import { contains, descend, find, map, pipe, prop, propSatisfies, sort } from 'ramda';
+import { includes, descend, find, map, pipe, prop, propSatisfies, sort } from 'ramda';
 
 interface Episode {
   imageURL: string;
@@ -19,7 +19,7 @@ interface DetailAction {
 const getCreatedTS = prop('created');
 const byCreatedDate = descend<Episode>(getCreatedTS);
 
-const findDetailAction = find<DetailAction>(propSatisfies(contains('/detail/'), 'href'));
+const findDetailAction = find<DetailAction>(propSatisfies(includes('/detail/'), 'href'));
 
 const findAllEpisodes = (obj, currentItems = []) => {
   const containerItems = obj.resultObj.containers || [];
