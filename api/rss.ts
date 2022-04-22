@@ -17,7 +17,7 @@ interface DetailAction {
 }
 
 const getCreatedTS = prop('created');
-const byCreatedDate = descend(getCreatedTS);
+const byCreatedDate = descend<Episode>(getCreatedTS);
 
 const findDetailAction = find<DetailAction>(propSatisfies(contains('/detail/'), 'href'));
 

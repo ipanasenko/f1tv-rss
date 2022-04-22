@@ -6,17 +6,29 @@
   "repository": "https://github.com/ipanasenko/f1tv-rss",
   "author": "Ilya Panasenko <hottdogg2008@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "@types/ramda": "^0.27.38",
-    "axios": "^0.21.1",
+    "@types/ramda": "^0.28.11",
+    "axios": "^0.26.1",
     "feed": "^4.2.2",
-    "ramda": "^0.27.1"
+    "next": "^12.1.5",
+    "ramda": "^0.28.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@vercel/node": "^1.9.1",
-    "husky": "^5.1.3",
-    "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1",
-    "typescript": "^4.2.3"
+    "@types/react": "^18.0.6",
+    "@vercel/node": "^1.14.1",
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
   }
 }
