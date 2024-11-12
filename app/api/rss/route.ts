@@ -92,7 +92,7 @@ export async function GET() {
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
 
-  sortedEpisodes.forEach((episode) => {
+  sortedEpisodes.slice(0, 20).forEach((episode) => {
     const synopsis = episode.synopsis ? `<p>${episode.synopsis}</p>` : '';
 
     feed.addItem({
