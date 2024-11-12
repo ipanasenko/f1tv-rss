@@ -104,5 +104,5 @@ export async function GET() {
     });
   });
 
-  return new Response(feed.atom1().replace(/\s+</g, ''));
+  return new Response(feed.atom1().replace(/\s+</g, '<'));
 }
