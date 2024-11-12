@@ -1,7 +1,15 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import axios from 'axios';
 import { Feed } from 'feed';
-import { includes, descend, find, map, pipe, prop, propSatisfies, sort } from 'ramda';
+import {
+  includes,
+  descend,
+  find,
+  map,
+  pipe,
+  prop,
+  propSatisfies,
+  sort,
+} from 'ramda';
 
 interface Episode {
   imageURL: string;
@@ -19,10 +27,12 @@ interface DetailAction {
 const getCreatedTS = prop('created');
 const byCreatedDate = descend<Episode>(getCreatedTS);
 
-const findDetailAction = find<DetailAction>(propSatisfies(includes('/detail/'), 'href'));
+const findDetailAction = find<DetailAction>(
+  propSatisfies(includes('/detail/'), 'href'),
+);
 
-const findAllEpisodes = (obj, currentItems = []) => {
-  const containerItems = obj.resultObj.containers || [];
+const findAllEpisodes = (obj: any, currentItems = []) => {
+  const containerItems: any[] = obj.resultObj.containers || [];
   return containerItems.reduce((acc, containerItem) => {
     if (containerItem.retrieveItems) {
       // going deeper into recursion
@@ -39,21 +49,25 @@ const findAllEpisodes = (obj, currentItems = []) => {
   }, currentItems);
 };
 
-const transformEpisode = (containerItem): Episode => {
-  const { externalId, pictureUrl, longDescription, contractStartDate, title } = containerItem.metadata;
-  const detailAction = findDetailAction(containerItem.actions);
+const transformEpisode = (containerItem: any): Episode => {
+  const { externalId, pictureUrl, longDescription, contractStartDate, title } =
+    containerItem.metadata;
+  const detailAction = findDetailAction(containerItem.actions)!;
 
   return {
     imageURL: `https://f1tv.formula1.com/image-resizer/image/${pictureUrl}?w=708&h=398&q=HI&o=L`,
     uid: externalId,
     created: contractStartDate,
     title,
-    link: `https://f1tv.formula1.com${detailAction.href.replace('?action=play', '')}`,
+    link: `https://f1tv.formula1.com${detailAction.href.replace(
+      '?action=play',
+      '',
+    )}`,
     synopsis: longDescription,
   };
 };
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+export async function GET() {
   const feed = new Feed({
     title: 'F1 TV',
     id: 'https://f1tv.formula1.com/en/home',
@@ -65,7 +79,10 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   feed.addCategory('motorsport');
   feed.addCategory('formula1');
 
-  const { data } = await axios.get('https://f1tv.formula1.com/2.0/A/ENG/WEB_DASH/ALL/PAGE/395/F1_TV_Pro_Annual/2');
+  const response = await fetch(
+    'https://f1tv.formula1.com/2.0/A/ENG/WEB_DASH/ALL/PAGE/395/F1_TV_Pro_Annual/2',
+  );
+  const data = await response.json();
   const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
@@ -83,6 +100,5 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     });
   });
 
-  res.setHeader('content-type', 'application/xml; charset=UTF-8');
-  res.status(200).send(feed.atom1());
-};
+  return new Response(feed.atom1());
+}
