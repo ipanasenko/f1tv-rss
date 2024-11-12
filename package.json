@@ -4,7 +4,7 @@
   "description": "RSS feed for F1 TV",
   "main": "index.js",
   "repository": "https://github.com/ipanasenko/f1tv-rss",
-  "author": "Ilya Panasenko <hottdogg2008@gmail.com>",
+  "author": "Illia Panasenko <hottdogg2008@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
