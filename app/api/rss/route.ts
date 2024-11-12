@@ -81,6 +81,11 @@ export async function GET() {
 
   const response = await fetch(
     'https://f1tv.formula1.com/2.0/A/ENG/WEB_DASH/ALL/PAGE/395/F1_TV_Pro_Annual/2',
+    {
+      next: {
+        revalidate: 3600, // 1 hour
+      },
+    },
   );
   const data = await response.json();
   const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
