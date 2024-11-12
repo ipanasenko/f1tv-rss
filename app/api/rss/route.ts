@@ -1,9 +1,8 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Feed } from 'feed';
 import {
-  includes,
   descend,
   find,
+  includes,
   map,
   pipe,
   prop,
@@ -105,5 +104,5 @@ export async function GET() {
     });
   });
 
-  return new Response(feed.atom1());
+  return new Response(feed.atom1().replace(/\s+</g, ''));
 }
