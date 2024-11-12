@@ -1,0 +1,13 @@
+{
+  "pre-commit": {
+    "piped": true,
+    "commands": {
+      "format": {
+        "priority": 30,
+        "glob": "*.{js,jsx,ts,tsx}",
+        "run": "npx prettier --write {staged_files}",
+        "stage_fixed": true
+      }
+    }
+  }
+}
