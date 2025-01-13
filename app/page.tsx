@@ -28,6 +28,7 @@ export default function Home() {
                 View on GitHub
               </a>
             </Button>
+
             <Button
               asChild
               className="gap-2 bg-red-800 hover:bg-red-900 text-white border-2 border-white"
@@ -39,6 +40,21 @@ export default function Home() {
               >
                 <Rss className="w-4 h-4" />
                 Subscribe to RSS
+              </a>
+            </Button>
+
+            <Button asChild className="gap-2 bg-yellow-200 hover:bg-yellow-300">
+              <a
+                href="https://ko-fi.com/ipanasenko"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://storage.ko-fi.com/cdn/logomarkLogo.png"
+                  alt="Ko-fi donations"
+                  className="animate-wiggle h-5"
+                />
+                Say thanks 🙏 🤗
               </a>
             </Button>
           </div>
@@ -76,18 +92,6 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-        </div>
-
-        <div className="text-center">
-          <p className="text-lg text-red-100">
-            <a href="https://ko-fi.com/ipanasenko" target="_blank">
-              <img
-                style={{ height: 36 }}
-                src="https://storage.ko-fi.com/cdn/kofi2.png?v=6"
-                alt="Buy Me a Coffee at ko-fi.com"
-              />
-            </a>
-          </p>
         </div>
       </div>
     </div>
