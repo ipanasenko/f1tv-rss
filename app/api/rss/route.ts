@@ -104,5 +104,9 @@ export async function GET() {
     });
   });
 
-  return new Response(feed.atom1().replace(/\s+</g, '<'));
+  return new Response(feed.atom1().replace(/\s+</g, '<'), {
+    headers: {
+      CacheControl: 'public, max-age=3600, s-maxage=3600',
+    },
+  });
 }
