@@ -1,4 +1,4 @@
-# F1 TV RSS feed
+# Unofficial F1 TV RSS feed
 
 ![](./docs/atom-valid.png)
 
