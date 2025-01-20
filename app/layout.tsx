@@ -4,7 +4,18 @@ import { PropsWithChildren } from 'react';
 
 export const metadata: Metadata = {
   title: 'Unofficial F1 TV RSS Feed',
-  description: 'Unofficial F1 TV RSS Feed',
+  description:
+    'Stay updated with Formula 1 content through a convenient RSS feed',
+  keywords: [
+    'F1',
+    'Formula 1',
+    'RSS',
+    'feed',
+    'news',
+    'Formula 1 TV',
+    'F1 TV',
+    'F1 TS RSS Feed',
+  ],
   icons: '/favicon.png',
   verification: {
     google: 's59NRBOGWvj3JYMUyTS7VAxHUaaQznnEBfeHziytWZM',
