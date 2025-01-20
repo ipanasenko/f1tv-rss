@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
+import { CSPostHogProvider } from './providers';
 
 export const metadata: Metadata = {
   title: 'Unofficial F1 TV RSS Feed',
@@ -30,7 +31,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <CSPostHogProvider>
+        <body>{children}</body>
+      </CSPostHogProvider>
     </html>
   );
 }

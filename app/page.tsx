@@ -49,6 +49,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://storage.ko-fi.com/cdn/logomarkLogo.png"
                   alt="Ko-fi donations"
