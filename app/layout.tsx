@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
 import { CSPostHogProvider } from './providers';
+import { FEED_URL } from './const';
 
 export const metadata: Metadata = {
   title: 'Unofficial F1 TV RSS Feed',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      'application/rss+xml': 'https://f1tv-rss.vercel.app/api/rss',
+      'application/rss+xml': FEED_URL,
     },
   },
 };

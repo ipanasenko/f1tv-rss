@@ -1,6 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, Rss } from 'lucide-react';
+import { Github, Rss, Copy } from 'lucide-react';
+import {
+  CopyRSSFeed,
+  GitHubButton,
+  SayThanksButton,
+  SubscribeButton,
+} from './components';
 
 export default function Home() {
   return (
@@ -14,50 +20,9 @@ export default function Home() {
             Stay updated with Formula 1 content through a convenient RSS feed
           </p>
           <div className="flex justify-center gap-4">
-            <Button
-              asChild
-              variant="outline"
-              className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-white"
-            >
-              <a
-                href="https://github.com/ipanasenko/f1tv-rss"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="w-4 h-4" />
-                View on GitHub
-              </a>
-            </Button>
-
-            <Button
-              asChild
-              className="gap-2 bg-red-800 hover:bg-red-900 text-white border-2 border-white"
-            >
-              <a
-                href="https://f1tv-rss.vercel.app/api/rss"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Rss className="w-4 h-4" />
-                Subscribe to RSS
-              </a>
-            </Button>
-
-            <Button asChild className="gap-2 bg-yellow-200 hover:bg-yellow-300">
-              <a
-                href="https://ko-fi.com/ipanasenko"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://storage.ko-fi.com/cdn/logomarkLogo.png"
-                  alt="Ko-fi donations"
-                  className="animate-wiggle h-5"
-                />
-                Say thanks 🙏 🤗
-              </a>
-            </Button>
+            <GitHubButton />
+            <SubscribeButton />
+            <SayThanksButton />
           </div>
         </header>
 
@@ -83,9 +48,7 @@ export default function Home() {
               <h2 className="text-2xl font-bold mb-4 text-red-600">Usage</h2>
               <div className="space-y-4 text-gray-700">
                 <p>Add the following URL to your RSS reader:</p>
-                <code className="block bg-red-50 p-3 rounded-md text-sm border border-red-100">
-                  https://f1tv-rss.vercel.app/api/rss
-                </code>
+                <CopyRSSFeed />
                 <p className="text-sm text-gray-600">
                   The feed automatically updates when new content is available
                   on F1 TV.
