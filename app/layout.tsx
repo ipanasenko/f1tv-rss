@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Unofficial F1 TV RSS Feed',
   description: 'Unofficial F1 TV RSS Feed',
   icons: '/favicon.png',
+  verification: {
+    google: 's59NRBOGWvj3JYMUyTS7VAxHUaaQznnEBfeHziytWZM',
+  },
   alternates: {
     types: {
       'application/rss+xml': 'https://f1tv-rss.vercel.app/api/rss',
