@@ -76,7 +76,8 @@ export async function GET() {
   const feed = new Feed({
     title: 'Unofficial F1 TV RSS Feed',
     author: { name: 'F1 TV' },
-    id: 'https://f1tv.formula1.com/',
+    link: 'https://f1tv-rss.vercel.app',
+    id: 'https://f1tv-rss.vercel.app',
     copyright: '',
     favicon: 'https://f1tv.formula1.com/static/favicon.ico',
     feed: 'https://f1tv-rss.vercel.app/api/rss',
