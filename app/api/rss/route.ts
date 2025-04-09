@@ -1,3 +1,4 @@
+import { PostHog } from 'posthog-node';
 import { Feed } from 'feed';
 import {
   descend,
@@ -67,18 +68,24 @@ const transformEpisode = (containerItem: any): Episode => {
 };
 
 export async function GET() {
+  const posthog = new PostHog(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+    host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    enableExceptionAutocapture: true,
+  });
+
   const feed = new Feed({
-    title: 'F1 TV',
-    id: 'https://f1tv.formula1.com/en/home',
+    title: 'Unofficial F1 TV RSS Feed',
+    author: { name: 'F1 TV' },
+    id: 'https://f1tv.formula1.com/',
     copyright: '',
-    favicon: 'https://f1tv.formula1.com/assets/favicons/favicon.ico?v=1-30-0',
+    favicon: 'https://f1tv.formula1.com/static/favicon.ico',
     feed: 'https://f1tv-rss.vercel.app/api/rss',
   });
   feed.addCategory('sports');
   feed.addCategory('motorsport');
   feed.addCategory('formula1');
 
-  const response = await fetch(
+  const f1tvResponse = await fetch(
     'https://f1tv.formula1.com/2.0/A/ENG/WEB_DASH/ALL/PAGE/395/F1_TV_Pro_Annual/2',
     {
       next: {
@@ -86,10 +93,14 @@ export async function GET() {
       },
     },
   );
-  const data = await response.json();
+  const data = await f1tvResponse.json();
   const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
+
+  // if (!sortedEpisodes.length) {
+  posthog.captureException(new Error('No episodes found'));
+  // }
 
   sortedEpisodes.slice(0, 20).forEach((episode) => {
     const synopsis = episode.synopsis ? `<p>${episode.synopsis}</p>` : '';
@@ -104,9 +115,11 @@ export async function GET() {
     });
   });
 
-  return new Response(feed.atom1().replace(/\s+</g, '<'), {
-    headers: {
-      CacheControl: 'public, max-age=3600, s-maxage=3600',
-    },
+  const rssResponse = feed.atom1().replace(/\s+</g, '<');
+
+  await posthog.shutdown();
+
+  return new Response(rssResponse, {
+    headers: { CacheControl: 'public, max-age=3600, s-maxage=3600' },
   });
 }
