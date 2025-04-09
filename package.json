@@ -1,6 +1,6 @@
 {
   "name": "f1tv-rss",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "RSS feed for F1 TV",
   "main": "index.js",
   "repository": "https://github.com/ipanasenko/f1tv-rss",
