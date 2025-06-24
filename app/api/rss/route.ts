@@ -99,9 +99,9 @@ export async function GET() {
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
 
-  // if (!sortedEpisodes.length) {
-  posthog.captureException(new Error('No episodes found'));
-  // }
+  if (!sortedEpisodes.length) {
+    posthog.captureException(new Error('No episodes found'));
+  }
 
   sortedEpisodes.slice(0, 20).forEach((episode) => {
     const synopsis = episode.synopsis ? `<p>${episode.synopsis}</p>` : '';
