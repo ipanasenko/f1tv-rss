@@ -7,7 +7,7 @@
   "author": "Illia Panasenko <hottdogg2008@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "lefthook install",
+    "postinstall": "if [ -z \"$VERCEL\" ]; then lefthook install; fi",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
