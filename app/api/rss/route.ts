@@ -120,7 +120,9 @@ export async function GET() {
 
   await posthog.shutdown();
 
-  return new Response(rssResponse, {
-    headers: { CacheControl: 'public, max-age=3600, s-maxage=3600' },
-  });
+  const headers = new Headers();
+  headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+  headers.set('Content-Type', 'application/atom+xml');
+
+  return new Response(rssResponse, { headers });
 }
