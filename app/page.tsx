@@ -8,13 +8,13 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#e8e4dc] text-[#2c2825]">
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        {/* Retro header strip */}
-        <div className="bg-[#c41e3a] text-[#e8e4dc] py-2 px-4 -mx-6 mb-12 text-center text-sm font-medium tracking-widest uppercase">
-          Unofficial · Formula 1
-        </div>
+    <div className="min-h-screen bg-[#e8e4dc] text-[#2c2825] overflow-x-hidden">
+      {/* Retro header strip — full width */}
+      <div className="bg-[#c41e3a] text-[#e8e4dc] py-2 px-4 text-center text-sm font-medium tracking-widest uppercase">
+        Unofficial · Formula 1
+      </div>
 
+      <div className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-16">
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[#2c2825] mb-4 leading-[0.95]">
             F1 TV
@@ -58,7 +58,7 @@ export default function Home() {
               <p className="text-[#5c564f] text-sm mb-4">
                 Add this URL to your RSS reader:
               </p>
-              <div className="[&_span]:whitespace-nowrap [&_span]:overflow-x-auto [&_span]:min-w-0">
+              <div className="overflow-hidden">
                 <CopyRSSFeed />
               </div>
               <p className="text-[#5c564f] text-xs mt-4">

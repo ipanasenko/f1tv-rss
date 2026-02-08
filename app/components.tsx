@@ -129,8 +129,8 @@ export const CopyRSSFeed = () => {
   };
 
   return (
-    <code className="flex items-center block bg-red-50 p-2 rounded-md text-sm border border-red-100">
-      <span className="flex-grow">{FEED_URL}</span>
+    <code className="flex items-center bg-red-50 p-2 rounded-md text-sm border border-red-100 min-w-0">
+      <span className="flex-grow truncate">{FEED_URL}</span>
       <Button
         variant="outline"
         size="icon"
