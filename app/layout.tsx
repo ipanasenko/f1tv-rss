@@ -4,6 +4,11 @@ import { PropsWithChildren } from 'react';
 import { CSPostHogProvider } from './providers';
 import { FEED_URL } from './const';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: 'Unofficial F1 TV RSS Feed',
   description:

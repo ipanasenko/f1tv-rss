@@ -8,7 +8,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#e8e4dc] text-[#2c2825] overflow-x-hidden">
+    <div className="min-h-screen bg-[#e8e4dc] text-[#2c2825]">
       {/* Retro header strip — full width */}
       <div className="bg-[#c41e3a] text-[#e8e4dc] py-2 px-4 text-center text-sm font-medium tracking-widest uppercase">
         Unofficial · Formula 1
@@ -32,7 +32,7 @@ export default function Home() {
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none">
+          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none min-w-0">
             <CardContent className="p-6">
               <h2 className="text-sm font-black uppercase tracking-wider text-[#c41e3a] mb-4">
                 Features
@@ -50,17 +50,15 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none">
-            <CardContent className="p-6">
+          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none min-w-0">
+            <CardContent className="p-6 overflow-hidden">
               <h2 className="text-sm font-black uppercase tracking-wider text-[#c41e3a] mb-4">
                 Usage
               </h2>
               <p className="text-[#5c564f] text-sm mb-4">
                 Add this URL to your RSS reader:
               </p>
-              <div className="overflow-hidden">
-                <CopyRSSFeed />
-              </div>
+              <CopyRSSFeed />
               <p className="text-[#5c564f] text-xs mt-4">
                 Feed updates when new content is on F1 TV.
               </p>

@@ -129,12 +129,12 @@ export const CopyRSSFeed = () => {
   };
 
   return (
-    <code className="flex items-center bg-red-50 p-2 rounded-md text-sm border border-red-100 min-w-0">
-      <span className="flex-grow truncate">{FEED_URL}</span>
+    <code className="flex items-center bg-red-50 p-2 rounded-md text-sm border border-red-100 min-w-0 w-full">
+      <span className="flex-grow min-w-0 break-all">{FEED_URL}</span>
       <Button
         variant="outline"
         size="icon"
-        className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-red-100"
+        className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-red-100 shrink-0 ml-2"
         onClick={handleCopy}
       >
         {copied ? (
