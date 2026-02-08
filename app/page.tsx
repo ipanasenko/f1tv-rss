@@ -24,10 +24,10 @@ export default function Home() {
           <p className="text-[#5c564f] text-lg mb-10">
             Stay updated with Formula 1 content through a convenient RSS feed.
           </p>
-          <div className="flex flex-wrap gap-3">
-            <SubscribeButton expandOnHover />
-            <GitHubButton expandOnHover />
-            <SayThanksButton expandOnHover />
+          <div className="flex flex-wrap gap-3 [&>*]:w-44">
+            <SubscribeButton />
+            <GitHubButton />
+            <SayThanksButton />
           </div>
         </header>
 
