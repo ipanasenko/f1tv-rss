@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, Rss, Copy } from 'lucide-react';
 import {
   CopyRSSFeed,
   GitHubButton,
@@ -10,53 +8,69 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-600 to-red-700">
-      <div className="container mx-auto px-4 py-16">
-        <header className="text-center mb-16">
-          <h1 className="text-white text-5xl font-bold mb-4">
-            <span className="italic opacity-35">Unofficial</span> F1 TV RSS Feed
+    <div className="min-h-screen bg-[#e8e4dc] text-[#2c2825]">
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        {/* Retro header strip */}
+        <div className="bg-[#c41e3a] text-[#e8e4dc] py-2 px-4 -mx-6 mb-12 text-center text-sm font-medium tracking-widest uppercase">
+          Unofficial · Formula 1
+        </div>
+
+        <header className="mb-16">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[#2c2825] mb-4 leading-[0.95]">
+            F1 TV
+            <br />
+            <span className="text-[#c41e3a]">RSS Feed</span>
           </h1>
-          <p className="text-red-100 text-lg mb-8">
-            Stay updated with Formula 1 content through a convenient RSS feed
+          <p className="text-[#5c564f] text-lg mb-10">
+            Stay updated with Formula 1 content through a convenient RSS feed.
           </p>
-          <div className="flex justify-center gap-4">
-            <GitHubButton />
-            <SubscribeButton />
-            <SayThanksButton />
+          <div className="flex flex-wrap gap-3">
+            <SubscribeButton expandOnHover />
+            <GitHubButton expandOnHover />
+            <SayThanksButton expandOnHover />
           </div>
         </header>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="bg-white border-none shadow-lg">
+        <div className="grid md:grid-cols-2 gap-6">
+          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none">
             <CardContent className="p-6">
-              <h2 className="text-2xl font-bold mb-4 text-red-600">Features</h2>
-              <ul className="space-y-3 text-gray-700">
+              <h2 className="text-sm font-black uppercase tracking-wider text-[#c41e3a] mb-4">
+                Features
+              </h2>
+              <ul className="space-y-2 text-[#2c2825]/90">
                 <li className="flex items-start gap-2">
-                  <span className="text-red-600">•</span>
+                  <span className="text-[#c41e3a] mt-0.5">▸</span>
                   Automatic updates for new F1 TV content
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-red-600">•</span>
+                  <span className="text-[#c41e3a] mt-0.5">▸</span>
                   Compatible with any RSS reader
                 </li>
               </ul>
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-none shadow-lg">
+          <Card className="bg-white/80 border-2 border-[#2c2825]/10 rounded-none shadow-none">
             <CardContent className="p-6">
-              <h2 className="text-2xl font-bold mb-4 text-red-600">Usage</h2>
-              <div className="space-y-4 text-gray-700">
-                <p>Add the following URL to your RSS reader:</p>
+              <h2 className="text-sm font-black uppercase tracking-wider text-[#c41e3a] mb-4">
+                Usage
+              </h2>
+              <p className="text-[#5c564f] text-sm mb-4">
+                Add this URL to your RSS reader:
+              </p>
+              <div className="[&_span]:whitespace-nowrap [&_span]:overflow-x-auto [&_span]:min-w-0">
                 <CopyRSSFeed />
-                <p className="text-sm text-gray-600">
-                  The feed automatically updates when new content is available
-                  on F1 TV.
-                </p>
               </div>
+              <p className="text-[#5c564f] text-xs mt-4">
+                Feed updates when new content is on F1 TV.
+              </p>
             </CardContent>
           </Card>
         </div>
+
+        <p className="mt-12 text-center text-[#5c564f] text-sm">
+          — No affiliation with Formula 1 or F1 TV —
+        </p>
       </div>
     </div>
   );

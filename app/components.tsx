@@ -6,14 +6,20 @@ import { usePostHog } from 'posthog-js/react';
 import { FC, useRef, useState } from 'react';
 import { FEED_URL } from './const';
 
-export const GitHubButton = () => {
+export const GitHubButton = ({
+  expandOnHover = false,
+}: { expandOnHover?: boolean } = {}) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
       variant="outline"
-      className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-white"
+      className={`bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-white ${
+        expandOnHover
+          ? 'group h-10 w-10 p-0 justify-center hover:w-auto hover:px-4 hover:gap-2 transition-all duration-200'
+          : 'gap-2'
+      }`}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'view_on_github' });
       }}
@@ -23,39 +29,63 @@ export const GitHubButton = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Github className="w-4 h-4" />
-        View on GitHub
+        <Github className="w-4 h-4 shrink-0" />
+        {expandOnHover ? (
+          <span className="hidden group-hover:inline whitespace-nowrap">
+            View on GitHub
+          </span>
+        ) : (
+          'View on GitHub'
+        )}
       </a>
     </Button>
   );
 };
 
-export const SubscribeButton = () => {
+export const SubscribeButton = ({
+  expandOnHover = false,
+}: { expandOnHover?: boolean } = {}) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
-      className="gap-2 bg-red-800 hover:bg-red-900 text-white border-2 border-white"
+      className={`bg-red-800 hover:bg-red-900 text-white border-2 border-white ${
+        expandOnHover
+          ? 'group h-10 w-10 p-0 justify-center hover:w-auto hover:px-4 hover:gap-2 transition-all duration-200'
+          : 'gap-2'
+      }`}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'subscribe_to_rss' });
       }}
     >
       <a href={FEED_URL} target="_blank" rel="noopener noreferrer">
-        <Rss className="w-4 h-4" />
-        Subscribe to RSS
+        <Rss className="w-4 h-4 shrink-0" />
+        {expandOnHover ? (
+          <span className="hidden group-hover:inline whitespace-nowrap">
+            Subscribe to RSS
+          </span>
+        ) : (
+          'Subscribe to RSS'
+        )}
       </a>
     </Button>
   );
 };
 
-export const SayThanksButton = () => {
+export const SayThanksButton = ({
+  expandOnHover = false,
+}: { expandOnHover?: boolean } = {}) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
-      className="gap-2 bg-yellow-200 hover:bg-yellow-300"
+      className={`bg-yellow-200 hover:bg-yellow-300 ${
+        expandOnHover
+          ? 'group h-10 w-10 p-0 justify-center hover:w-auto hover:px-4 hover:gap-2 transition-all duration-200'
+          : 'gap-2'
+      }`}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'say_thanks' });
       }}
@@ -69,9 +99,15 @@ export const SayThanksButton = () => {
         <img
           src="https://storage.ko-fi.com/cdn/logomarkLogo.png"
           alt="Ko-fi donations"
-          className="animate-wiggle h-5"
+          className="animate-wiggle h-5 w-5 shrink-0"
         />
-        Say thanks 🙏 🤗
+        {expandOnHover ? (
+          <span className="hidden group-hover:inline whitespace-nowrap">
+            Say thanks 🙏 🤗
+          </span>
+        ) : (
+          'Say thanks 🙏 🤗'
+        )}
       </a>
     </Button>
   );
