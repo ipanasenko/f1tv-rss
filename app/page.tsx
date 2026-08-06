@@ -7,7 +7,7 @@ import {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#ff3b30] pb-16 text-[#101010]">
+    <main className="relative min-h-screen overflow-hidden bg-[#ff3b30] text-[#101010]">
       <div className="absolute inset-x-0 top-[32%] h-16 -skew-y-3 bg-[#ffdf4d]" />
 
       <header className="relative z-10 flex items-center justify-between px-5 py-5 md:px-9">
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-6xl flex-col items-center justify-center px-5 pb-16 text-center">
+      <section className="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-6xl flex-col items-center justify-center px-5 pb-16 text-center xl:pb-6">
         <div className="rotate-[-2deg] border-2 border-black bg-white px-4 py-2 text-[10px] font-black uppercase tracking-[0.22em] shadow-[5px_5px_0_#111]">
           The unofficial F1 TV feed with official pace
         </div>
@@ -56,7 +56,7 @@ export default function Home() {
         </ul>
       </section>
 
-      <p className="absolute bottom-5 left-1/2 z-10 w-full -translate-x-1/2 text-center text-[9px] font-bold uppercase tracking-[0.14em]">
+      <p className="absolute bottom-1.5 left-1/2 z-10 w-full -translate-x-1/2 text-center text-[9px] font-bold uppercase tracking-[0.14em]">
         Unofficial project · Not affiliated with Formula 1 or F1 TV
       </p>
     </main>
