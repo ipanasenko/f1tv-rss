@@ -1,19 +1,31 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Check, Copy, Github, Rss } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Check, Copy, Github, Heart, Rss } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 import { useRef, useState } from 'react';
 import { FEED_URL } from './const';
 
-export const GitHubButton = () => {
+type ActionButtonProps = {
+  className?: string;
+  label?: string;
+};
+
+export const GitHubButton = ({
+  className,
+  label = 'View on GitHub',
+}: ActionButtonProps) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
       variant="outline"
-      className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-white"
+      className={cn(
+        'gap-2 border-white bg-white text-red-600 hover:bg-red-50 hover:text-red-700',
+        className,
+      )}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'view_on_github' });
       }}
@@ -22,40 +34,50 @@ export const GitHubButton = () => {
         href="https://github.com/ipanasenko/f1tv-rss"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={label || 'View on GitHub'}
       >
         <Github className="w-4 h-4" />
-        View on GitHub
+        {label}
       </a>
     </Button>
   );
 };
 
-export const SubscribeButton = () => {
+export const SubscribeButton = ({
+  className,
+  label = 'Subscribe to RSS',
+}: ActionButtonProps) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
-      className="gap-2 bg-red-800 hover:bg-red-900 text-white border-2 border-white"
+      className={cn(
+        'gap-2 border-2 border-white bg-red-800 text-white hover:bg-red-900',
+        className,
+      )}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'subscribe_to_rss' });
       }}
     >
       <a href={FEED_URL} target="_blank" rel="noopener noreferrer">
         <Rss className="w-4 h-4" />
-        Subscribe to RSS
+        {label}
       </a>
     </Button>
   );
 };
 
-export const SayThanksButton = () => {
+export const SayThanksButton = ({
+  className,
+  label = 'Say thanks',
+}: ActionButtonProps) => {
   const posthog = usePostHog();
 
   return (
     <Button
       asChild
-      className="gap-2 bg-yellow-200 hover:bg-yellow-300"
+      className={cn('gap-2 bg-yellow-200 hover:bg-yellow-300', className)}
       onClick={() => {
         posthog.capture('button_click', { button_name: 'say_thanks' });
       }}
@@ -64,20 +86,19 @@ export const SayThanksButton = () => {
         href="https://ko-fi.com/ipanasenko"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={label || 'Say thanks'}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://storage.ko-fi.com/cdn/logomarkLogo.png"
-          alt="Ko-fi donations"
-          className="animate-wiggle h-5"
-        />
-        Say thanks 🙏 🤗
+        <Heart className="h-4 w-4" />
+        {label}
       </a>
     </Button>
   );
 };
 
-export const CopyRSSFeed = () => {
+export const CopyRSSButton = ({
+  className,
+  label = 'Copy feed',
+}: ActionButtonProps) => {
   const posthog = usePostHog();
 
   const timeoutIdRef = useRef<number | undefined>(undefined);
@@ -93,20 +114,14 @@ export const CopyRSSFeed = () => {
   };
 
   return (
-    <code className="flex items-center bg-red-50 p-2 rounded-md text-sm border border-red-100 min-w-0 w-full">
-      <span className="flex-grow min-w-0 break-all">{FEED_URL}</span>
-      <Button
-        variant="outline"
-        size="icon"
-        className="gap-2 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-red-100 shrink-0 ml-2"
-        onClick={handleCopy}
-      >
-        {copied ? (
-          <Check className="w-4 h-4 text-green-600" />
-        ) : (
-          <Copy className="w-4 h-4" />
-        )}
-      </Button>
-    </code>
+    <Button
+      variant="outline"
+      className={cn('gap-2', className)}
+      onClick={handleCopy}
+      aria-label="Copy RSS feed URL"
+    >
+      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      {copied ? 'Copied' : label}
+    </Button>
   );
 };
