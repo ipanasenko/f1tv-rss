@@ -1,12 +1,16 @@
 import '../styles/globals.css';
 import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import { PropsWithChildren } from 'react';
 import { CSPostHogProvider } from './providers';
 import { FEED_URL } from './const';
 
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
+
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  colorScheme: 'light dark',
 };
 
 export const metadata: Metadata = {
@@ -36,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <CSPostHogProvider>
         <body>{children}</body>
       </CSPostHogProvider>
