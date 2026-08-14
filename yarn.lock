@@ -555,6 +555,16 @@
   resolved "https://registry.npmjs.org/@fastify/busboy/-/busboy-2.1.1.tgz#b9da6a878a371829a0502c9b6c1c143ef6663f4d"
   integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
+"@hugeicons/core-free-icons@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/@hugeicons/core-free-icons/-/core-free-icons-4.2.3.tgz#9fe176324556ba9145e5e9fd06ea614e24850c83"
+  integrity sha512-fpiU0qFZkv4ABi23xJ2m4qNr0BBfuIaYjPboN8WDA6aj9D+OzXa7eykxKOpACZRuGbDz1U9S5DsNx1d5KNnsgA==
+
+"@hugeicons/react@^1.1.9":
+  version "1.1.9"
+  resolved "https://registry.npmjs.org/@hugeicons/react/-/react-1.1.9.tgz#b305ebf692c2c68d9d86c2011510cf87b5769171"
+  integrity sha512-O+lWSWjbijoAvMCxn4K2bQWCGN5+mP1y5j+X99j23mXMj+s0X25fs71T6t9YJLaBodwmZdaewD27dzS/PiboQw==
+
 "@humanfs/core@^0.19.2":
   version "0.19.2"
   resolved "https://registry.npmjs.org/@humanfs/core/-/core-0.19.2.tgz#a8272ca03b2acf492670222b2320b6c421bfde60"
@@ -3224,11 +3234,6 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
-
-lucide-react@^1.28.0:
-  version "1.28.0"
-  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-1.28.0.tgz#d955536afb0df490a4e97faf068ceb8c6b2dafbf"
-  integrity sha512-fARAFJULsGuDDydjp6+6blekG/sBIM29TerzLjc9bQUKAcEfrSc4ZQKb25KRz4OMKd87cZTb5dgq0w/T6KufVg==
 
 magic-string@^0.30.21:
   version "0.30.21"

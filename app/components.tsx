@@ -2,7 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Check, Copy, GitFork, Heart, Rss } from 'lucide-react';
+import CheckIcon from '@hugeicons/core-free-icons/CheckIcon';
+import CopyIcon from '@hugeicons/core-free-icons/CopyIcon';
+import GithubIcon from '@hugeicons/core-free-icons/GithubIcon';
+import HeartIcon from '@hugeicons/core-free-icons/HeartIcon';
+import RssIcon from '@hugeicons/core-free-icons/RssIcon';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { usePostHog } from 'posthog-js/react';
 import { useRef, useState } from 'react';
 import { FEED_URL } from './const';
@@ -36,7 +41,7 @@ export const GitHubButton = ({
         rel="noopener noreferrer"
         aria-label={label || 'View on GitHub'}
       >
-        <GitFork className="h-4 w-4" />
+        <HugeiconsIcon icon={GithubIcon} className="h-4 w-4" />
         {label}
       </a>
     </Button>
@@ -61,7 +66,7 @@ export const SubscribeButton = ({
       }}
     >
       <a href={FEED_URL} target="_blank" rel="noopener noreferrer">
-        <Rss className="w-4 h-4" />
+        <HugeiconsIcon icon={RssIcon} className="h-4 w-4" />
         {label}
       </a>
     </Button>
@@ -88,7 +93,7 @@ export const SayThanksButton = ({
         rel="noopener noreferrer"
         aria-label={label || 'Say thanks'}
       >
-        <Heart className="h-4 w-4" />
+        <HugeiconsIcon icon={HeartIcon} className="h-4 w-4" />
         {label}
       </a>
     </Button>
@@ -120,7 +125,12 @@ export const CopyRSSButton = ({
       onClick={handleCopy}
       aria-label="Copy RSS feed URL"
     >
-      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      <HugeiconsIcon
+        icon={CopyIcon}
+        altIcon={CheckIcon}
+        showAlt={copied}
+        className="h-4 w-4"
+      />
       {copied ? 'Copied' : label}
     </Button>
   );
