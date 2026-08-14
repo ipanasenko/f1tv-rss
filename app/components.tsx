@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Check, Copy, Github, Heart, Rss } from 'lucide-react';
+import { Check, Copy, GitFork, Heart, Rss } from 'lucide-react';
 import { usePostHog } from 'posthog-js/react';
 import { useRef, useState } from 'react';
 import { FEED_URL } from './const';
@@ -36,7 +36,7 @@ export const GitHubButton = ({
         rel="noopener noreferrer"
         aria-label={label || 'View on GitHub'}
       >
-        <Github className="w-4 h-4" />
+        <GitFork className="h-4 w-4" />
         {label}
       </a>
     </Button>

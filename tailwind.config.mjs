@@ -1,5 +1,7 @@
+import animate from 'tailwindcss-animate';
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: 'media',
   content: ['app/**/*.{ts,tsx}', 'components/**/*.{ts,tsx}'],
   theme: {
@@ -62,5 +64,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [animate],
 };
+
+export default config;

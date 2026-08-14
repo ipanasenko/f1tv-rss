@@ -24,6 +24,26 @@ interface DetailAction {
   href: string;
 }
 
+interface EpisodeMetadata {
+  externalId: string;
+  pictureUrl: string;
+  longDescription: string;
+  contractStartDate: number;
+  title: string;
+}
+
+interface EpisodeContainer {
+  actions?: DetailAction[];
+  metadata: EpisodeMetadata;
+  retrieveItems?: F1TVResponse;
+}
+
+interface F1TVResponse {
+  resultObj: {
+    containers?: EpisodeContainer[];
+  };
+}
+
 const getCreatedTS = prop('created');
 const byCreatedDate = descend<Episode>(getCreatedTS);
 
@@ -31,8 +51,11 @@ const findDetailAction = find<DetailAction>(
   propSatisfies(includes('/detail/'), 'href'),
 );
 
-const findAllEpisodes = (obj: any, currentItems = []) => {
-  const containerItems: any[] = obj.resultObj.containers || [];
+const findAllEpisodes = (
+  obj: F1TVResponse,
+  currentItems: EpisodeContainer[] = [],
+): EpisodeContainer[] => {
+  const containerItems = obj.resultObj.containers || [];
   return containerItems.reduce((acc, containerItem) => {
     if (containerItem.retrieveItems) {
       // going deeper into recursion
@@ -49,10 +72,10 @@ const findAllEpisodes = (obj: any, currentItems = []) => {
   }, currentItems);
 };
 
-const transformEpisode = (containerItem: any): Episode => {
+const transformEpisode = (containerItem: EpisodeContainer): Episode => {
   const { externalId, pictureUrl, longDescription, contractStartDate, title } =
     containerItem.metadata;
-  const detailAction = findDetailAction(containerItem.actions)!;
+  const detailAction = findDetailAction(containerItem.actions || [])!;
 
   return {
     imageURL: `https://f1tv.formula1.com/image-resizer/image/${pictureUrl}?w=708&h=398&q=HI&o=L`,
@@ -94,7 +117,7 @@ export async function GET() {
       },
     },
   );
-  const data = await f1tvResponse.json();
+  const data = (await f1tvResponse.json()) as F1TVResponse;
   const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
 
   const sortedEpisodes = sort(byCreatedDate, episodesData);
