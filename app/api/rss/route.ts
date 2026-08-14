@@ -1,15 +1,5 @@
 import { PostHog } from 'posthog-node';
 import { Feed } from 'feed';
-import {
-  descend,
-  find,
-  includes,
-  map,
-  pipe,
-  prop,
-  propSatisfies,
-  sort,
-} from 'ramda';
 
 interface Episode {
   imageURL: string;
@@ -44,12 +34,11 @@ interface F1TVResponse {
   };
 }
 
-const getCreatedTS = prop('created');
-const byCreatedDate = descend<Episode>(getCreatedTS);
+const byCreatedDate = (first: Episode, second: Episode) =>
+  second.created - first.created;
 
-const findDetailAction = find<DetailAction>(
-  propSatisfies(includes('/detail/'), 'href'),
-);
+const findDetailAction = (actions: DetailAction[] = []) =>
+  actions.find(({ href }) => href.includes('/detail/'));
 
 const findAllEpisodes = (
   obj: F1TVResponse,
@@ -62,7 +51,7 @@ const findAllEpisodes = (
       return findAllEpisodes(containerItem.retrieveItems, acc);
     }
 
-    const detailAction = findDetailAction(containerItem.actions || []);
+    const detailAction = findDetailAction(containerItem.actions);
     if (detailAction) {
       // found an item!
       return [...acc, containerItem];
@@ -75,7 +64,7 @@ const findAllEpisodes = (
 const transformEpisode = (containerItem: EpisodeContainer): Episode => {
   const { externalId, pictureUrl, longDescription, contractStartDate, title } =
     containerItem.metadata;
-  const detailAction = findDetailAction(containerItem.actions || [])!;
+  const detailAction = findDetailAction(containerItem.actions)!;
 
   return {
     imageURL: `https://f1tv.formula1.com/image-resizer/image/${pictureUrl}?w=708&h=398&q=HI&o=L`,
@@ -118,9 +107,8 @@ export async function GET() {
     },
   );
   const data = (await f1tvResponse.json()) as F1TVResponse;
-  const episodesData = pipe(findAllEpisodes, map(transformEpisode))(data);
-
-  const sortedEpisodes = sort(byCreatedDate, episodesData);
+  const episodesData = findAllEpisodes(data).map(transformEpisode);
+  const sortedEpisodes = episodesData.toSorted(byCreatedDate);
 
   if (!sortedEpisodes.length) {
     posthog.captureException(new Error('No episodes found'));
